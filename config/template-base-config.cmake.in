@@ -1,0 +1,40 @@
+# gcc-dll-x64-release
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-gcc-dll-x64-release-config.cmake OPTIONAL)
+# gcc-lib-x64-release
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-gcc-lib-x64-release-config.cmake OPTIONAL)
+
+# gcc-lib-x64-debug
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-gcc-lib-x64-debug-config.cmake OPTIONAL)
+# gcc-dll-x64-debug
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-gcc-dll-x64-debug-config.cmake OPTIONAL)
+
+# gcc-dll-x32-release
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-gcc-dll-x32-release-config.cmake OPTIONAL)
+# gcc-lib-x32-release
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-gcc-lib-x32-release-config.cmake OPTIONAL)
+
+# gcc-lib-x32-debug
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-gcc-lib-x32-debug-config.cmake OPTIONAL)
+# gcc-dll-x32-debug
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-gcc-dll-x32-debug-config.cmake OPTIONAL)
+
+
+# msvc-dll-x64-release
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-msvc-dll-x64-release-config.cmake OPTIONAL)
+# msvc-lib-x64-release
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-msvc-lib-x64-release-config.cmake OPTIONAL)
+
+# msvc-lib-x64-debug
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-msvc-lib-x64-debug-config.cmake OPTIONAL)
+# msvc-dll-x64-debug
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-msvc-dll-x64-debug-config.cmake OPTIONAL)
+
+# msvc-dll-x32-release
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-msvc-dll-x32-release-config.cmake OPTIONAL)
+# msvc-lib-x32-release
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-msvc-lib-x32-release-config.cmake OPTIONAL)
+
+# msvc-lib-x32-debug
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-msvc-lib-x32-debug-config.cmake OPTIONAL)
+# msvc-dll-x32-debug
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/@PROJECT_NAME@-msvc-dll-x32-debug-config.cmake OPTIONAL)

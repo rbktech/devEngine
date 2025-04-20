@@ -1,0 +1,11 @@
+# core-config
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/devCore-config.cmake OPTIONAL)
+
+# graph-config
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/devGraph-config.cmake OPTIONAL)
+
+# plot-config
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/devPlot-config.cmake OPTIONAL)
+
+# space-config
+include(@CMAKE_INSTALL_PREFIX@/@CMAKE_PROJECT_NAME@-@CMAKE_PROJECT_VERSION@/share/@CMAKE_PROJECT_NAME@/cmake/devSpace-config.cmake OPTIONAL)
