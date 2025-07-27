@@ -15,3 +15,7 @@ typedef float GLclampf;
 typedef double GLdouble;
 typedef double GLclampd;
 typedef void GLvoid;
+typedef char GLchar;
+
+constexpr auto sizefloat = sizeof(GLfloat);
+constexpr auto sizeuint = sizeof(GLuint);
