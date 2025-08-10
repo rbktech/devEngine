@@ -1,0 +1,20 @@
+#version 330 core
+
+layout (location = 0) in vec3 position;
+layout (location = 1) in vec3 color;
+layout (location = 2) in vec2 texture_coord;
+
+out vec3 m_color;
+out vec2 m_texture_coord;
+
+uniform mat4 u_projection;
+uniform mat4 u_view;
+
+void main()
+{
+	gl_Position = u_projection * vec4(position, 1.0);
+
+	m_color = color;
+
+	m_texture_coord = texture_coord;
+}
