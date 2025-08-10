@@ -1,13 +1,6 @@
 #include "core/object/scale.h"
 
-#include <GL/glew.h>
-
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/ext/matrix_float4x4.hpp>
-
-#include "core/error.h"
-
-#include "core/object/shader.h"
+#include <glm/ext/matrix_transform.hpp>
 
 namespace core
 {
@@ -17,8 +10,6 @@ namespace core
         , m_z(1.0f)
     {
     }
-
-    // -------------------------------------------------------------------
 
     GLvoid CScale::init(Node* node)
     {

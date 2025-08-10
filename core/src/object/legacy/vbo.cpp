@@ -10,7 +10,7 @@ namespace core
         : CData(nullptr, 0)
         , m_vertex_buffer_object(0)
     {
-        e(glGenBuffers(1, &m_vertex_buffer_object));
+        e(glGenBuffers(1, &m_vertex_buffer_object)); // return void
     }
 
     CVBO::CVBO(const GLvoid* data, const GLsizei& size)
@@ -22,7 +22,7 @@ namespace core
 
     CVBO::~CVBO()
     {
-        e(glDeleteBuffers(1, &m_vertex_buffer_object));
+        e(glDeleteBuffers(1, &m_vertex_buffer_object)); // return void
     }
 
     GLvoid CVBO::init(Node* node)
@@ -30,9 +30,6 @@ namespace core
         CVBO::Bind();
 
         e(glBufferData(GL_ARRAY_BUFFER, m_size * sizefloat, m_data, GL_STATIC_DRAW));
-
-        e(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr));
-        e(glEnableVertexAttribArray(0));
 
         if(node != nullptr)
             node->Init();
@@ -46,106 +43,75 @@ namespace core
 
         e(glBufferData(GL_ARRAY_BUFFER, m_size * sizefloat, m_data, GL_STATIC_DRAW));
 
-        e(glVertexAttribPointer(param, 3, GL_FLOAT, GL_FALSE, 0, nullptr));
-        e(glEnableVertexAttribArray(param));
-
         if(node != nullptr)
-            node->Init(param + 1);
+            node->Init(param);
 
         CVBO::UnBind();
     }
 
     GLvoid CVBO::init(glm::mat4& transform, Node* node)
     {
-        CVBO::Bind();
-
-        e(glBufferData(GL_ARRAY_BUFFER, m_size * sizefloat, m_data, GL_STATIC_DRAW));
-
-        e(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr));
-        e(glEnableVertexAttribArray(0));
-
-        if(node != nullptr)
-            node->Init(transform);
-
-        CVBO::UnBind();
+        throw std::runtime_error("error: wrong call: GLvoid CVBO::init(glm::mat4& transform, Node* node)");
     }
 
     GLvoid CVBO::draw(Node* node)
     {
+        e(glEnableClientState(GL_VERTEX_ARRAY));
+
+        CVBO::Bind();
+
+        e(glVertexPointer(3, GL_FLOAT, 0, nullptr));
+
         if(node != nullptr)
             node->Draw();
+
+        e(glDisableClientState(GL_VERTEX_ARRAY));
     }
 
     GLvoid CVBO::draw(const GLuint* array, Node* node)
     {
+        e(glEnableClientState(GL_VERTEX_ARRAY));
+
+        CVBO::Bind();
+
+        e(glVertexPointer(3, GL_FLOAT, 0, nullptr));
+
         if(node != nullptr)
             node->Draw(array);
+
+        e(glDisableClientState(GL_VERTEX_ARRAY));
     }
 
     GLvoid CVBO::draw(const GLuint& shader_program, Node* node)
     {
-        if(node != nullptr)
-            node->Draw(shader_program);
+        throw std::runtime_error("error: wrong call: GLvoid CVBO::draw(const GLuint& shader_program, Node* node)");
     }
 
     GLvoid CVBO::draw(const GLuint& shader_program, const GLuint* array, Node* node)
     {
-        if(node != nullptr)
-            node->Draw(shader_program, array);
+        throw std::runtime_error("error: wrong call: GLvoid CVBO::draw(const GLuint& shader_program, const GLuint* array, Node* node)");
     }
 
     GLvoid CVBO::update(Node* node)
     {
-        Update();
-
-        if(node != nullptr)
-            node->Update();
     }
 
     GLvoid CVBO::update(glm::mat4& transform, Node* node)
     {
-        Update();
-
-        if(node != nullptr)
-            node->Update(transform);
     }
 
     GLvoid CVBO::Bind()
     {
-        e(glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_object));
+        e(glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_object)); // return void
     }
 
     GLvoid CVBO::UnBind()
     {
-        e(glBindBuffer(GL_ARRAY_BUFFER, 0));
+        e(glBindBuffer(GL_ARRAY_BUFFER, 0)); // return void
     }
 
     GLuint CVBO::Get()
     {
         return m_vertex_buffer_object;
-    }
-
-    GLvoid CVBO::Update()
-    {
-        if(m_data != nullptr && m_size > 0) {
-
-            CVBO::Bind();
-
-            e(glBufferData(GL_ARRAY_BUFFER, m_size * sizefloat, m_data, GL_STATIC_DRAW));
-
-            CVBO::UnBind();
-        }
-    }
-
-    GLvoid CVBO::Update(const GLuint& offset)
-    {
-        if(m_data != nullptr && m_size > 0) {
-
-            CVBO::Bind();
-
-            e(glBufferSubData(GL_ARRAY_BUFFER, offset, m_size * sizefloat, m_data));
-
-            CVBO::UnBind();
-        }
     }
 }

@@ -4,40 +4,46 @@
 
 namespace core
 {
-    struct TMove {
-        GLfloat x;
-        GLfloat z;
-    };
-
-    struct TRotate {
-        GLfloat pitch;
-        GLfloat yaw;
-    };
-
-    struct TCentre {
-        GLfloat x;
-        GLfloat y;
-        GLfloat z;
-    };
-
-    struct TRadius {
-        GLfloat value;
-    };
-
     class CCamera : public CBBO
     {
+    public:
+        struct TMoveXZ {
+            GLfloat x;
+            GLfloat z;
+        };
+
+        struct TMoveXY {
+            GLfloat x;
+            GLfloat y;
+        };
+
+        struct TRotate {
+            GLfloat pitch;
+            GLfloat yaw;
+        };
+
+        struct TCentre {
+            GLfloat x;
+            GLfloat y;
+            GLfloat z;
+        };
+
+        struct TRadius {
+            GLfloat value;
+        };
+
     private:
-        glm::mat4 m_view = glm::mat4(1.0f);
+        glm::mat4 m_view;
 
-        GLfloat mRadius = 3.0f;
+        GLfloat mRadius;
 
-        glm::vec3 mCameraEye = { 0.0f, 0.0f, mRadius };
-        glm::vec3 mCameraFront = { 0.0f, 0.0f, 1.0f };
-        glm::vec3 mCameraCenter = { 0.0f, 0.0f, 0.0f };
-        glm::vec3 mCameraUp = { 0.0f, 1.0f, 0.0f };
+        glm::vec3 mCameraEye;
+        glm::vec3 mCameraFront;
+        glm::vec3 mCameraCenter;
+        glm::vec3 mCameraUp;
 
-        GLfloat mPitch = 0.0f; // Угол тангаж (в градусах)
-        GLfloat mYaw = 0.0f;   // Угол рыскание (в градусах)
+        GLfloat mPitch; // Угол тангаж (в градусах)
+        GLfloat mYaw;   // Угол рыскание (в градусах)
 
         GLvoid init(Node* node) final;
         GLvoid init(const GLint& param, Node* node) final;
@@ -57,13 +63,17 @@ namespace core
 
         void Refresh();
 
+        GLvoid Update();
+
     public:
         CCamera();
         ~CCamera() override = default;
 
         GLvoid Set();
 
-        GLvoid Set(const TMove& move);
+        GLvoid Set(const TMoveXZ& move);
+
+        GLvoid Set(const TMoveXY& move);
 
         GLvoid Set(const TRotate& rotate);
 
@@ -71,6 +81,6 @@ namespace core
 
         GLvoid Set(const TRadius& radius);
 
-        GLvoid Update();
+        glm::mat4 GetMatrix();
     };
 }

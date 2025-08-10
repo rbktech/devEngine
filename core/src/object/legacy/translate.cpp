@@ -2,8 +2,6 @@
 
 #include <GL/glew.h>
 
-#include <glm/ext/matrix_transform.hpp>
-
 #include "core/error.h"
 
 namespace core
@@ -24,44 +22,45 @@ namespace core
 
     GLvoid CTranslate::init(Node* node)
     {
-        throw std::runtime_error("error: wrong call: GLvoid CTranslate::init(Node* node)");
+        if(node != nullptr)
+            node->Init();
     }
 
     GLvoid CTranslate::init(const GLint& param, Node* node)
     {
-        throw std::runtime_error("error: wrong call: GLvoid CTranslate::init(const GLint& param, Node* node)");
+        if(node != nullptr)
+            node->Init(param);
     }
 
     GLvoid CTranslate::init(glm::mat4& transform, Node* node)
     {
-        if(node != nullptr)
-            node->Init(transform);
-
-        transform = glm::translate(transform, { m_x, m_y, m_z });
+        throw std::runtime_error("error: wrong call: GLvoid CTranslate::init(glm::mat4& transform, Node* node)");
     }
 
     GLvoid CTranslate::draw(Node* node)
     {
+        e(glTranslatef(m_x, m_y, m_z));
+
         if(node != nullptr)
             node->Draw();
     }
 
     GLvoid CTranslate::draw(const GLuint* array, Node* node)
     {
+        e(glTranslatef(m_x, m_y, m_z));
+
         if(node != nullptr)
             node->Draw(array);
     }
 
     GLvoid CTranslate::draw(const GLuint& shader_program, Node* node)
     {
-        if(node != nullptr)
-            node->Draw(shader_program);
+        throw std::runtime_error("error: wrong call: GLvoid CTranslate::draw(const GLuint& shader_program, Node* node)");
     }
 
     GLvoid CTranslate::draw(const GLuint& shader_program, const GLuint* array, Node* node)
     {
-        if(node != nullptr)
-            node->Draw(shader_program, array);
+        throw std::runtime_error("error: wrong call: GLvoid CTranslate::draw(const GLuint& shader_program, const GLuint* array, Node* node)");
     }
 
     GLvoid CTranslate::update(Node* node)
@@ -72,10 +71,7 @@ namespace core
 
     GLvoid CTranslate::update(glm::mat4& transform, Node* node)
     {
-        if(node != nullptr)
-            node->Update(transform);
-
-        transform = glm::translate(transform, { m_x, m_y, m_z });
+        throw std::runtime_error("error: wrong call: GLvoid CTranslate::update(glm::mat4& transform, Node* node)");
     }
 
     GLvoid CTranslate::Bind()

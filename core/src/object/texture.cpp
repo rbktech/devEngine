@@ -39,13 +39,15 @@ namespace core
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_BGRA, GL_UNSIGNED_BYTE, data + offset);
         else
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_BGR, GL_UNSIGNED_BYTE, data + offset);
-    }
 
-    GLvoid CTexture::CreateBuffer(const GLchar* img, const GLint& w, const GLint& h)
-    {
         // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, w, h, 0, GL_RGB,  GL_UNSIGNED_BYTE, img + 54);
         // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, img + 54);
         // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,  w, h, 0, GL_RGB,  GL_UNSIGNED_BYTE, img + 54);
+    }
+
+    GLvoid CTexture::CreateBuffer(const GLint& w, const GLint& h)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
     }
 
     GLvoid CTexture::ParamBase()
@@ -108,16 +110,6 @@ namespace core
         // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR); !!!
 
         glGenerateMipmap(GL_TEXTURE_2D);
-    }
-
-    GLvoid CTexture::Bind()
-    {
-        e(glBindTexture(GL_TEXTURE_2D, m_texture));
-    }
-
-    GLvoid CTexture::UnBind()
-    {
-        e(glBindTexture(GL_TEXTURE_2D, 0));
     }
 
     GLvoid CTexture::Enable()
@@ -222,6 +214,16 @@ namespace core
     {
         if(node != nullptr)
             node->Update(transform);
+    }
+
+    GLvoid CTexture::Bind()
+    {
+        e(glBindTexture(GL_TEXTURE_2D, m_texture));
+    }
+
+    GLvoid CTexture::UnBind()
+    {
+        e(glBindTexture(GL_TEXTURE_2D, 0));
     }
 
     GLuint CTexture::Get()

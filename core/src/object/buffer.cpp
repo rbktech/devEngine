@@ -7,50 +7,16 @@
 namespace core
 {
     CData::CData()
-        : m_data(nullptr)
-        , m_size(0)
+        : m_size(0)
+        , m_data(nullptr)
     {
     }
 
     CData::CData(const GLvoid* data, const GLsizei& size)
-        : m_data(data)
-        , m_size(size)
+        : m_size(size)
+        , m_data(data)
     {
     }
-
-    // -------------------------------------------------------------------
-
-    /*GLvoid CData::init(const GLint& param, Node* node)
-    {
-        if(node != nullptr)
-            node->Init(param);
-    }
-
-    GLvoid CData::draw(const GLuint* array, Node* node)
-    {
-        if(node != nullptr)
-            node->Draw(array);
-    }
-
-    GLvoid CData::draw(const GLuint& shader_program, Node* node)
-    {
-        if(node != nullptr)
-            node->Draw(shader_program);
-    }
-
-    GLvoid CData::draw(const GLuint& shader_program, const GLuint* array, Node* node)
-    {
-        if(node != nullptr)
-            node->Draw(shader_program, array);
-    }
-
-    GLvoid CData::draw(Node* node)
-    {
-        if(node != nullptr)
-            node->Draw();
-    }*/
-
-    // -------------------------------------------------------------------
 
     GLvoid CData::Set(const GLvoid* data, const GLsizei& size)
     {
@@ -71,19 +37,17 @@ namespace core
     {
         e(glGenBuffers(1, &m_buffer_object));
     }
+
+    CBuffer::CBuffer(const GLvoid* data, const GLsizei& size)
+        : CData(data, size)
+        , m_buffer_object(0)
+    {
+        e(glGenBuffers(1, &m_buffer_object));
+    }
+
     CBuffer::~CBuffer()
     {
         e(glDeleteBuffers(1, &m_buffer_object));
-    }
-
-    GLvoid CBuffer::Bind()
-    {
-        e(glBindBuffer(GL_ARRAY_BUFFER, m_buffer_object));
-    }
-
-    GLvoid CBuffer::UnBind()
-    {
-        e(glBindBuffer(GL_ARRAY_BUFFER, 0));
     }
 
     GLvoid CBuffer::init(Node* node)
@@ -97,7 +61,7 @@ namespace core
         if(node != nullptr)
             node->Init();
 
-        // CBuffer::UnBind();
+        CBuffer::UnBind();
     }
 
     GLvoid CBuffer::init(const GLint& param, Node* node)
@@ -106,25 +70,12 @@ namespace core
 
         e(glBufferData(GL_ARRAY_BUFFER, m_size * sizefloat, m_data, GL_STATIC_DRAW));
 
-        /*// position attribute
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)nullptr);
-        glEnableVertexAttribArray(0);
-        // texture coord attribute
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-        glEnableVertexAttribArray(1);*/
-
-        /*e(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizefloat, nullptr));
-        e(glEnableVertexAttribArray(0));
-
-        e(glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizefloat, (GLvoid*)(3 * sizefloat)));
-        e(glEnableVertexAttribArray(1));*/
-
         CBuffer::Attribute();
 
         if(node != nullptr)
             node->Init(param);
 
-        // CBuffer::UnBind();
+        CBuffer::UnBind();
     }
 
     GLvoid CBuffer::init(glm::mat4& transform, Node* node)
@@ -138,37 +89,29 @@ namespace core
         if(node != nullptr)
             node->Init(transform);
 
-        // CBuffer::UnBind();
+        CBuffer::UnBind();
     }
 
     GLvoid CBuffer::draw(Node* node)
     {
-        // CBuffer::Bind();
-
         if(node != nullptr)
             node->Draw();
     }
 
     GLvoid CBuffer::draw(const GLuint* array, Node* node)
     {
-        // CBuffer::Bind();
-
         if(node != nullptr)
             node->Draw(array);
     }
 
     GLvoid CBuffer::draw(const GLuint& shader_program, Node* node)
     {
-        // CBuffer::Bind();
-
         if(node != nullptr)
             node->Draw(shader_program);
     }
 
     GLvoid CBuffer::draw(const GLuint& shader_program, const GLuint* array, Node* node)
     {
-        // CBuffer::Bind();
-
         if(node != nullptr)
             node->Draw(shader_program, array);
     }
@@ -177,12 +120,31 @@ namespace core
     {
         if(node != nullptr)
             node->Update();
+
+        CBuffer::Update();
     }
 
     GLvoid CBuffer::update(glm::mat4& transform, Node* node)
     {
         if(node != nullptr)
             node->Update(transform);
+
+        CBuffer::Update();
+    }
+
+    GLvoid CBuffer::Bind()
+    {
+        e(glBindBuffer(GL_ARRAY_BUFFER, m_buffer_object));
+    }
+
+    GLvoid CBuffer::UnBind()
+    {
+        e(glBindBuffer(GL_ARRAY_BUFFER, 0));
+    }
+
+    GLuint CBuffer::Get()
+    {
+        return m_buffer_object;
     }
 
     GLvoid CBuffer::Set(const GLvoid* data, const GLsizei& size, GLvoid (*attribute)())
@@ -192,8 +154,79 @@ namespace core
         Attribute = attribute;
     }
 
-    GLuint CBuffer::Get()
+    GLvoid CBuffer::Set(const GLvoid* data, const GLsizei& size)
     {
-        return m_buffer_object;
+        CData::Set(data, size);
+    }
+
+    GLvoid CBuffer::Update()
+    {
+        if(m_data != nullptr && m_size > 0) {
+
+            CBuffer::Bind();
+
+            e(glBufferData(GL_ARRAY_BUFFER, m_size * sizefloat, m_data, GL_STATIC_DRAW));
+
+            CBuffer::UnBind();
+        }
+    }
+
+    GLvoid CBuffer::Update(const GLuint& offset)
+    {
+        if(m_data != nullptr && m_size > 0) {
+
+            CBuffer::Bind();
+
+            e(glBufferSubData(GL_ARRAY_BUFFER, offset, m_size * sizefloat, m_data));
+
+            CBuffer::UnBind();
+        }
+    }
+
+    // -----------------------------------------------------------------------
+
+    GLvoid CBuffer::DefineVertex(const GLint& nCoord, const GLsizei& stride, const GLint& beginByte)
+    {
+        e(glVertexPointer(nCoord, GL_FLOAT, (GLsizei)(stride * sizefloat), (GLvoid*)(beginByte * sizefloat)));
+    }
+
+    GLvoid CBuffer::DefineColor(const GLint& nColor, const GLsizei& stride, const GLint& beginByte)
+    {
+        e(glColorPointer(nColor, GL_FLOAT, (GLsizei)(stride * sizefloat), (GLvoid*)(beginByte * sizefloat)));
+    }
+
+    GLvoid CBuffer::DefineTexCoord(const GLint& nTexCoord, const GLsizei& stride, const GLint& beginByte)
+    {
+        e(glTexCoordPointer(nTexCoord, GL_FLOAT, (GLsizei)(stride * sizefloat), (GLvoid*)(beginByte * sizefloat)));
+    }
+
+    GLvoid CBuffer::EnableVertex()
+    {
+        e(glEnableClientState(GL_VERTEX_ARRAY));
+    }
+
+    GLvoid CBuffer::EnableColor()
+    {
+        e(glEnableClientState(GL_COLOR_ARRAY));
+    }
+
+    GLvoid CBuffer::EnableTexCoord()
+    {
+        e(glEnableClientState(GL_TEXTURE_COORD_ARRAY));
+    }
+
+    GLvoid CBuffer::DisableVertex()
+    {
+        e(glDisableClientState(GL_VERTEX_ARRAY));
+    }
+
+    GLvoid CBuffer::DisableColor()
+    {
+        e(glDisableClientState(GL_COLOR_ARRAY));
+    }
+
+    GLvoid CBuffer::DisableTexCoord()
+    {
+        e(glDisableClientState(GL_TEXTURE_COORD_ARRAY));
     }
 }

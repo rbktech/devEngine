@@ -12,7 +12,6 @@ namespace core
         const GLvoid* m_data;
 
     private:
-
         GLvoid init(Node* node) override = 0;
         GLvoid init(const GLint& param, Node* node) override = 0;
         GLvoid init(glm::mat4& transform, Node* node) override = 0;
@@ -31,12 +30,10 @@ namespace core
 
     public:
         CData();
-
         CData(const GLvoid* data, const GLsizei& size);
-
         ~CData() override = default;
 
-        GLvoid Set(const GLvoid* data, const GLsizei& size);
+        virtual GLvoid Set(const GLvoid* data = nullptr, const GLsizei& size = 0);
 
         GLvoid Reset() override;
     };
@@ -49,7 +46,7 @@ namespace core
     private:
         GLuint m_buffer_object;
 
-        GLvoid (*Attribute)() = {};
+        GLvoid (*Attribute)() = []() {};
 
         GLvoid init(Node* node) final;
         GLvoid init(const GLint& param, Node* node) final;
@@ -63,8 +60,12 @@ namespace core
         GLvoid update(Node* node) final;
         GLvoid update(glm::mat4& transform, Node* node) final;
 
+        GLvoid Update();
+        GLvoid Update(const GLuint& offset);
+
     public:
         CBuffer();
+        CBuffer(const GLvoid* data, const GLsizei& size);
         ~CBuffer() override;
 
         GLvoid Bind() final;
@@ -72,5 +73,19 @@ namespace core
         GLuint Get() final;
 
         GLvoid Set(const GLvoid* data, const GLsizei& size, GLvoid (*attribute)());
+
+        GLvoid Set(const GLvoid* data, const GLsizei& size) override;
+
+        GLvoid DefineVertex(const GLint& nCoord, const GLsizei& stride, const GLint& beginByte);
+        GLvoid DefineColor(const GLint& nColor, const GLsizei& stride, const GLint& beginByte);
+        GLvoid DefineTexCoord(const GLint& nTexCoord, const GLsizei& stride, const GLint& beginByte);
+
+        GLvoid EnableVertex();
+        GLvoid EnableColor();
+        GLvoid EnableTexCoord();
+
+        GLvoid DisableVertex();
+        GLvoid DisableColor();
+        GLvoid DisableTexCoord();
     };
 }

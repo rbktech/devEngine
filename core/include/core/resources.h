@@ -89,14 +89,33 @@ public:
 
     EFileType GetType();
 
+    /**
+     * @brief Возвращает размер файла
+     * @return size_t - размер файла
+     */
     size_t GetSize();
+
+    /**
+     * @brief Возвращает размер массива
+     * @return size_t - размер массива
+     */
     size_t GetCount();
 
+    /**
+     * @brief Возвращает указатель на сырые данные файла
+     * @tparam T - тип возвращаемого указателя
+     * @return T* - указатель на сырые данные файла
+     */
     template <class T> T* GetRaw()
     {
         return reinterpret_cast<T*>(m_root);
     }
 
+    /**
+     * @brief Возвращает указатель на данные массива
+     * @tparam T - тип возвращаемого указателя
+     * @return T* - указатель на данные массива
+     */
     template <class T> T* GetData()
     {
         return reinterpret_cast<T*>(&m_data[0]);

@@ -10,8 +10,10 @@ namespace core
     CMash::~CMash()
     {
         m_mashes.clear();
-        m_root->Delete();
-        delete m_root;
+        if(m_root != nullptr) {
+            m_root->Delete();
+            delete m_root;
+        }
     }
 
     GLvoid CMash::Reset()
@@ -23,7 +25,7 @@ namespace core
     GLvoid CMash::Apply()
     {
         for(const auto& item : m_mashes) {
-            const int& type = item.first;
+            [[maybe_unused]] const int& type = item.first;
             CBBO* object = item.second.get();
             if(object != nullptr) {
 
@@ -39,6 +41,12 @@ namespace core
         Reset();
     }
 
+    GLvoid CMash::Draw()
+    {
+        if(m_root != nullptr)
+            m_root->Draw();
+    }
+
     GLvoid CMash::Draw(const GLuint* array)
     {
         if(m_root != nullptr)
@@ -51,10 +59,10 @@ namespace core
             m_root->Draw(shader_program);
     }
 
-    GLvoid CMash::Draw()
+    GLvoid CMash::Draw(const GLuint& shader_program, const GLuint* array)
     {
         if(m_root != nullptr)
-            m_root->Draw();
+            m_root->Draw(shader_program, array);
     }
 
     GLvoid CMash::Update()

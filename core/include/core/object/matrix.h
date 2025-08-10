@@ -27,21 +27,11 @@ namespace core
 
     public:
         CMatrix() = default;
+        CMatrix(const glm::mat4& transform);
         ~CMatrix() override = default;
 
-        GLvoid Set(const glm::mat4& transform = glm::mat4(1.0f))
-        {
-            m_transform = transform;
-        }
+        GLvoid Set(const glm::mat4& transform = glm::mat4(1.0f));
 
-        /*GLvoid SetMatrix(const glm::mat4& transform = glm::mat4(1.0f))
-        {
-            m_transform = transform;
-        }
-
-        glm::mat4 GetMatrix()
-        {
-            return m_transform;
-        }*/
+        glm::mat4 GetMatrix();
     };
 }

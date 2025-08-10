@@ -28,7 +28,6 @@ namespace core
         GLuint Get() final { return 0; };
 
         glm::mat4 Update(const glm::mat4& transform);
-
     public:
         CScale();
         ~CScale() override = default;

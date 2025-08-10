@@ -11,7 +11,7 @@ namespace core
     private:
         core::CBBO::Node* m_root = nullptr;
 
-        std::map<int, std::shared_ptr<core::CBBO>> m_mashes;
+        std::map<GLint, std::shared_ptr<core::CBBO>> m_mashes;
 
         GLvoid Reset();
 
@@ -21,11 +21,10 @@ namespace core
 
         GLvoid Apply();
 
-        GLvoid Draw(const GLuint* array);
-
-        GLvoid Draw(const GLuint& shader_program);
-
         GLvoid Draw();
+        GLvoid Draw(const GLuint* array);
+        GLvoid Draw(const GLuint& shader_program);
+        GLvoid Draw(const GLuint& shader_program, const GLuint* array);
 
         GLvoid Update();
 

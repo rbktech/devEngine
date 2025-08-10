@@ -1,13 +1,10 @@
 #pragma once
 
-// #include <glm/gtc/type_ptr.hpp>
 #include <glm/ext/matrix_float4x4.hpp>
 
 #include "core/type.h"
 
-#include <iostream>
 #include <map>
-#include <typeinfo>
 
 namespace core
 {
@@ -31,7 +28,7 @@ namespace core
         Orthographic = 20,
         Camera,
         Shader, // ShaderProgram,
-    }; // Снизу вверх идет обход объектов
+    };          // Снизу вверх идет обход объектов
 
     /*
      * Base buffer object
@@ -121,7 +118,8 @@ namespace core
         };
 
     private:
-        // GLenum m_type = 0;
+        GLenum m_type;
+        GLboolean m_show;
 
     protected:
         virtual GLvoid init(Node* node) = 0;
@@ -145,14 +143,8 @@ namespace core
         virtual GLuint Get() = 0;
         virtual GLvoid Reset();
 
-        GLvoid SetDrawCoordinate(const GLfloat& x, const GLfloat& y, const GLfloat& z = 0);
+        GLboolean IsShow();
 
-        GLvoid SetDrawArray(const GLenum& type, const GLsizei& size, const GLsizei& first);
-
-        GLvoid SetDrawElement(const GLenum& type, const GLsizei& size);
-
-        GLvoid DrawArray();
-
-        GLvoid DrawElement(const void* indices = nullptr);
+        GLvoid IsShow(const GLboolean& show);
     };
 }

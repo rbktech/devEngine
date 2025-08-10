@@ -210,7 +210,7 @@ namespace core
         if(node != nullptr)
             node->Init();
 
-        // CEBO::UnBind();
+        // Обязательно не должно быть UnBind у VAO
     }
 
     GLvoid CEBO::init(const GLint& param, Node* node)
@@ -222,7 +222,7 @@ namespace core
         if(node != nullptr)
             node->Init(param);
 
-        // CEBO::UnBind();
+        // Обязательно не должно быть UnBind у VAO
     }
 
     GLvoid CEBO::init(glm::mat4& transform, Node* node)
@@ -234,7 +234,7 @@ namespace core
         if(node != nullptr)
             node->Init(transform);
 
-        // CEBO::UnBind();
+        // Обязательно не должно быть UnBind у VAO
     }
 
     GLvoid CEBO::draw(Node* node)

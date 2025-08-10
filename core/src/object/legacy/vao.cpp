@@ -1,4 +1,7 @@
-#include "core/31/vao.h"
+#include "core/object/vao.h"
+#include "core/object/vao_buffer.h"
+
+#include <stdexcept>
 
 #include <GL/glew.h>
 
@@ -7,40 +10,83 @@
 namespace core
 {
     CVAO::CVAO()
-        : m_type(0)
-        , m_first(0)
-        , m_size(0)
-        , m_show(false)
-        , m_vertex_array_object_names(0)
-        , m_x(0.0f)
-        , m_y(0.0f)
-        , m_z(0.0f)
+        : m_vertex_array_object(0)
     {
-        e(glGenVertexArrays(1, &m_vertex_array_object_names)) // return void
+        e(glGenVertexArrays(1, &m_vertex_array_object)); // return void
     }
 
     CVAO::~CVAO()
     {
-        e(glDeleteVertexArrays(1, &m_vertex_array_object_names))
+        e(glDeleteVertexArrays(1, &m_vertex_array_object));
     }
 
-    GLvoid CVAO::SetDrawParams(const GLenum &type, const GLint &first, const GLsizei &size)
+    GLvoid CVAO::init(Node* node)
     {
-        m_type = type;
-        m_first = first;
-        m_size = size;
+        CVAO::Bind();
+
+        if(node != nullptr)
+            node->Init();
+
+        CVAO::UnBind();
     }
 
-    GLvoid CVAO::SetDrawCoordinate(const GLfloat& x, const GLfloat& y, const GLfloat& z)
+    GLvoid CVAO::init(const GLint& param, Node* node)
     {
-        m_x = x;
-        m_y = y;
-        m_z = z;
+        CVAO::Bind();
+
+        if(node != nullptr)
+            node->Init(param);
+
+        CVAO::UnBind();
+    }
+
+    GLvoid CVAO::init(glm::mat4& transform, Node* node)
+    {
+        throw std::runtime_error("error: wrong call: GLvoid CVAO::init(glm::mat4& transform, Node* node)");
+    }
+
+    GLvoid CVAO::draw(Node* node)
+    {
+        CVAO::Bind();
+
+        if(node != nullptr)
+            node->Draw();
+
+        CVAO::UnBind();
+    }
+
+    GLvoid CVAO::draw(const GLuint* array, Node* node)
+    {
+        CVAO::Bind();
+
+        if(node != nullptr)
+            node->Draw(array);
+
+        CVAO::UnBind();
+    }
+
+    GLvoid CVAO::draw(const GLuint& shader_program, Node* node)
+    {
+        throw std::runtime_error("error: wrong call: GLvoid CVAO::draw(const GLuint& shader_program, Node* node)");
+    }
+
+    GLvoid CVAO::draw(const GLuint& shader_program, const GLuint* array, Node* node)
+    {
+        throw std::runtime_error(
+            "error: wrong call: GLvoid CVAO::draw(const GLuint& shader_program, const GLuint* array, Node* node)");
+    }
+
+    GLvoid CVAO::update(Node* node)
+    {
+    }
+
+    GLvoid CVAO::update(glm::mat4& transform, Node* node)
+    {
     }
 
     GLvoid CVAO::Bind()
     {
-        e(glBindVertexArray(m_vertex_array_object_names));
+        e(glBindVertexArray(m_vertex_array_object));
     }
 
     GLvoid CVAO::UnBind()
@@ -48,38 +94,26 @@ namespace core
         e(glBindVertexArray(0));
     }
 
-    /*GLvoid CVAO::Draw()
-{
-    e(glPushMatrix());
+    GLuint CVAO::Get()
+    {
+        return m_vertex_array_object;
+    }
 
-    // e(glBindVertexArray(m_vertex_array_object));
+    GLvoid CVAO::Set()
+    {
+    }
 
-    CVAO::Bind();
-
-    e(glTranslatef(m_x, m_y, m_z));
-
-    e(glDrawArrays(m_type, m_first, m_size)); // return void
-
-    // e(glBindBuffer(GL_ARRAY_BUFFER, 0));
-
-    // e(glBindVertexArray(0));
-
-    e(glPopMatrix());
-
-    // e(glFlush());
-}*/
-
-    GLvoid CVAO::Draw()
+    GLvoid Draw()
     {
         e(glPushMatrix());
 
-        // e(glBindVertexArray(m_vertex_array_object_names));
+        // e(glBindVertexArray(m_vertex_array_object));
 
-        CVAO::Bind();
+        // CVAO::Bind();
 
-        e(glTranslatef(m_x, m_y, m_z));
+        // e(glTranslatef(m_x, m_y, m_z));
 
-        e(glDrawArrays(m_type, m_first, m_size)); // return void
+        // e(glDrawArrays(m_type, m_first, m_size)); // return void
 
         // e(glBindBuffer(GL_ARRAY_BUFFER, 0));
 
@@ -88,23 +122,6 @@ namespace core
         e(glPopMatrix());
 
         // e(glFlush());
-    }
-
-    GLboolean CVAO::IsShow()
-    {
-        return m_show;
-    }
-
-    GLvoid CVAO::IsShow(GLboolean value)
-    {
-        m_show = value;
-    }
-
-    GLvoid CVAO::draw(const GLuint* array, Node* node)
-    {
-        CVAO::Bind();
-        CBBO::Next(array);
-        CVAO::UnBind();
     }
 
     // -----------------------------------------------------------------------
@@ -139,7 +156,8 @@ namespace core
         {
             e(glBindBuffer(GL_ARRAY_BUFFER, m_buffer_object_name));
             {
-                e(glVertexPointer(nCoordinates, GL_FLOAT, (GLsizei)(stride * sizeof(GLfloat)), (GLvoid*)(beginByte * sizeof(GLfloat)))); // return void
+                e(glVertexPointer(nCoordinates, GL_FLOAT, (GLsizei)(stride * sizeof(GLfloat)),
+                    (GLvoid*)(beginByte * sizeof(GLfloat)))); // return void
 
                 e(glEnableClientState(GL_VERTEX_ARRAY));
             }
@@ -154,7 +172,8 @@ namespace core
         {
             e(glBindBuffer(GL_ARRAY_BUFFER, m_buffer_object_name));
             {
-                e(glColorPointer(nColor, GL_FLOAT, (GLsizei)(stride * sizeof(GLfloat)), (GLvoid*)(beginByte * sizeof(GLfloat)))); // return void
+                e(glColorPointer(nColor, GL_FLOAT, (GLsizei)(stride * sizeof(GLfloat)),
+                    (GLvoid*)(beginByte * sizeof(GLfloat)))); // return void
 
                 e(glEnableClientState(GL_COLOR_ARRAY));
             }

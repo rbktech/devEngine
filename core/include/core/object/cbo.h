@@ -21,8 +21,9 @@ namespace core
         GLvoid update(Node* node) final;
         GLvoid update(glm::mat4& transform, Node* node) final;
 
-        GLvoid SetBuffer();
-        GLvoid SetBuffer(const GLuint& offset);
+        GLvoid Update();
+        GLvoid Update(const GLuint& offset);
+
     public:
         CCBO();
         CCBO(const GLvoid* data, const GLsizei& size);

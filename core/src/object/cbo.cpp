@@ -8,6 +8,7 @@ namespace core
 {
     CCBO::CCBO()
         : CData(nullptr, 0)
+        ,m_color_buffer_object(0)
     {
         e(glGenBuffers(1, &m_color_buffer_object));
     }
@@ -29,7 +30,7 @@ namespace core
         if(node != nullptr)
             node->Init();
 
-        // CCBO::UnBind();
+        CCBO::UnBind();
     }
 
     GLvoid CCBO::init(const GLint& param, Node* node)
@@ -44,7 +45,7 @@ namespace core
         if(node != nullptr)
             node->Init(param + 1);
 
-        // CCBO::UnBind();
+        CCBO::UnBind();
     }
 
     GLvoid CCBO::init(glm::mat4& transform, Node* node)
@@ -59,47 +60,31 @@ namespace core
         if(node != nullptr)
             node->Init(transform);
 
-        // CCBO::UnBind();
+        CCBO::UnBind();
     }
 
     GLvoid CCBO::draw(Node* node)
     {
-        // CCBO::Bind();
-
         if(node != nullptr)
             node->Draw();
-
-        // CCBO::UnBind();
     }
 
     GLvoid CCBO::draw(const GLuint* array, Node* node)
     {
-        // CCBO::Bind();
-
         if(node != nullptr)
             node->Draw(array);
-
-        // CCBO::UnBind();
     }
 
     GLvoid CCBO::draw(const GLuint& shader_program, Node* node)
     {
-        // CCBO::Bind();
-
         if(node != nullptr)
             node->Draw(shader_program);
-
-        // CCBO::UnBind();
     }
 
     GLvoid CCBO::draw(const GLuint& shader_program, const GLuint* array, Node* node)
     {
-        // CCBO::Bind();
-
         if(node != nullptr)
             node->Draw(shader_program, array);
-
-        // CCBO::UnBind();
     }
 
     GLvoid CCBO::Bind()
@@ -119,7 +104,7 @@ namespace core
 
     GLvoid CCBO::update(Node* node)
     {
-        SetBuffer();
+        Update();
 
         if(node != nullptr)
             node->Update();
@@ -127,27 +112,33 @@ namespace core
 
     GLvoid CCBO::update(glm::mat4& transform, Node* node)
     {
-        SetBuffer();
+        Update();
 
         if(node != nullptr)
             node->Update(transform);
     }
 
-    GLvoid CCBO::SetBuffer()
+    GLvoid CCBO::Update()
     {
-        CCBO::Bind();
+        if(m_data != nullptr && m_size > 0) {
 
-        e(glBufferData(GL_ARRAY_BUFFER, m_size * sizefloat, m_data, GL_STATIC_DRAW));
+            CCBO::Bind();
 
-        CCBO::UnBind();
+            e(glBufferData(GL_ARRAY_BUFFER, m_size * sizefloat, m_data, GL_STATIC_DRAW));
+
+            CCBO::UnBind();
+        }
     }
 
-    GLvoid CCBO::SetBuffer(const GLuint& offset)
+    GLvoid CCBO::Update(const GLuint& offset)
     {
-        CCBO::Bind();
+        if(m_data != nullptr && m_size > 0) {
 
-        e(glBufferSubData(GL_ARRAY_BUFFER, offset, m_size * sizefloat, m_data));
+            CCBO::Bind();
 
-        CCBO::UnBind();
+            e(glBufferSubData(GL_ARRAY_BUFFER, offset, m_size * sizefloat, m_data));
+
+            CCBO::UnBind();
+        }
     }
 }

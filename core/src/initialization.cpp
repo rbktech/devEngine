@@ -41,6 +41,15 @@ namespace core
         e(glGetIntegerv(GL_MINOR_VERSION, &minor));
     }
 
+    GLvoid MaxVertexAttribs()
+    {
+        GLint maxVertexAttribs;
+
+        glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxVertexAttribs);
+
+        std::cout << "Max Vertex Attribs: " << maxVertexAttribs << std::endl;
+    }
+
     GLvoid Mode(const GLuint& mode)
     {
         const GLuint polygonMode = GL_POINT | mode % core::COUNT;

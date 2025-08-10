@@ -6,6 +6,21 @@ namespace core
 {
     class COrthographic : public CBBO
     {
+    public:
+        struct TMoveXY {
+            GLfloat x = 0.0f;
+            GLfloat y = 0.0f;
+        };
+
+        struct TScale {
+            GLfloat value = 0.0f;
+        };
+
+        struct TSize {
+            GLfloat w = 0.0f;
+            GLfloat h = 0.0f;
+        };
+
     private:
         glm::mat4 m_orthographic = glm::mat4(1.0f);
 
@@ -40,9 +55,19 @@ namespace core
             const GLfloat& right,
             const GLfloat& bottom,
             const GLfloat& top,
-            const GLfloat& near,
-            const GLfloat& far);
+            const GLfloat& near = -1.0f,
+            const GLfloat& far = 1.0f);
+
+        GLvoid Set(const TMoveXY& moveXY);
+
+        GLvoid Set(const TScale& scale);
+
+        GLvoid Set(const TSize& size);
 
         GLvoid Update();
+
+        glm::mat4 GetMatrix();
+
+        glm::vec3 ToWorldCoord(const GLfloat& x, const GLfloat& y, const GLfloat& w, const GLfloat& h);
     };
 }

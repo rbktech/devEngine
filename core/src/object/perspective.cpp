@@ -1,11 +1,7 @@
 #include "core/object/perspective.h"
 
-#include <GL/glew.h>
-
-#include <glm/ext/matrix_float4x4.hpp>
+#include <glm/ext/matrix_clip_space.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
-#include "core/error.h"
 
 #include "core/object/shader.h"
 
@@ -100,8 +96,6 @@ namespace core
         return 0;
     }
 
-    // -------------------------------------------------------------------
-
     GLvoid CPerspective::Set(const GLfloat& fovy, const GLfloat& aspect, const GLfloat& near, const GLfloat& far)
     {
         m_fovy = fovy;
@@ -113,5 +107,10 @@ namespace core
     GLvoid CPerspective::Update()
     {
         m_projection = glm::perspective(glm::radians(m_fovy), m_aspect, m_near, m_far);
+    }
+
+    glm::mat4 CPerspective::GetMatrix()
+    {
+        return m_projection;
     }
 }

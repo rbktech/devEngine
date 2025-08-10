@@ -2,11 +2,7 @@
 
 #include <GL/glew.h>
 
-#include <glm/gtc/type_ptr.hpp>
-
 #include "core/error.h"
-
-#include "core/object/shader.h"
 
 namespace core
 {
@@ -18,13 +14,13 @@ namespace core
     GLvoid CMatrix::init(Node* node)
     {
         if(node != nullptr)
-            node->Init(m_transform);
+            node->Init();
     }
 
     GLvoid CMatrix::init(const GLint& param, Node* node)
     {
         if(node != nullptr)
-            node->Init(m_transform);
+            node->Init();
     }
 
     GLvoid CMatrix::init(glm::mat4& transform, Node* node)
@@ -34,38 +30,38 @@ namespace core
 
     GLvoid CMatrix::draw(Node* node)
     {
+        e(glPushMatrix());
+
         if(node != nullptr)
             node->Draw();
+
+        e(glPopMatrix());
     }
 
     GLvoid CMatrix::draw(const GLuint* array, Node* node)
     {
+        e(glPushMatrix());
+
         if(node != nullptr)
             node->Draw(array);
+
+        e(glPopMatrix());
     }
 
     GLvoid CMatrix::draw(const GLuint& shader_program, Node* node)
     {
-        CShaderProgram::Update(shader_program, "u_model", glm::value_ptr(m_transform));
-
-        if(node != nullptr)
-            node->Draw(shader_program);
+        throw std::runtime_error("error: wrong call: GLvoid CMatrix::draw(const GLuint& shader_program, Node* node)");
     }
 
     GLvoid CMatrix::draw(const GLuint& shader_program, const GLuint* array, Node* node)
     {
-        CShaderProgram::Update(shader_program, "u_model", glm::value_ptr(m_transform));
-
-        if(node != nullptr)
-            node->Draw(shader_program, array);
+        throw std::runtime_error("error: wrong call: GLvoid CMatrix::draw(const GLuint& shader_program, const GLuint* array, Node* node)");
     }
 
     GLvoid CMatrix::update(Node* node)
     {
-        CMatrix::Set();
-
         if(node != nullptr)
-            node->Update(m_transform);
+            node->Update();
     }
 
     GLvoid CMatrix::update(glm::mat4& transform, Node* node)
@@ -76,10 +72,5 @@ namespace core
     GLvoid CMatrix::Set(const glm::mat4& transform)
     {
         m_transform = transform;
-    }
-
-    glm::mat4 CMatrix::GetMatrix()
-    {
-        return m_transform;
     }
 }

@@ -35,6 +35,10 @@ namespace core
         ~CDrawArrays() override = default;
 
         GLvoid Set(const GLenum& type, const GLint& first, const GLsizei& size);
+
+        GLvoid Set(const GLsizei& size);
+
+        GLint Size();
     };
 
     class CDrawElements : public CBBO

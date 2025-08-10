@@ -41,7 +41,7 @@ namespace core
         ~CTexture() override;
 
         GLvoid Create(const GLubyte* data, const GLint& width, const GLint& height, const GLint& offset, const GLint& bits);
-        GLvoid CreateBuffer(const GLchar* img, const GLint& w, const GLint& h);
+        GLvoid CreateBuffer(const GLint& w, const GLint& h);
 
         GLvoid ParamBase();
         GLvoid ParamRepeatNearest();

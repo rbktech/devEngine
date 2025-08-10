@@ -30,6 +30,8 @@ namespace core
         GLvoid UnBind() final;
         GLuint Get() final;
 
+        GLvoid Update();
+
     public:
         CPerspective();
         ~CPerspective() override = default;
@@ -39,6 +41,6 @@ namespace core
             const GLfloat& near = 0.1f,
             const GLfloat& far = 100.0f);
 
-        GLvoid Update();
+        glm::mat4 GetMatrix();
     };
 }

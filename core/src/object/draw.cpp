@@ -79,6 +79,16 @@ namespace core
         m_first = first;
         m_size = size;
     }
+
+    GLvoid CDrawArrays::Set(const GLsizei& size)
+    {
+        m_size += size;
+    }
+
+    GLint CDrawArrays::Size()
+    {
+        return m_size;
+    }
 }
 
 namespace core

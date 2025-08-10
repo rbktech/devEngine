@@ -23,31 +23,15 @@ namespace core
         GLvoid update(Node* node) final;
         GLvoid update(glm::mat4& transform, Node* node) final;
 
-        GLvoid Bind() final {};
-        GLvoid UnBind() final {};
-        GLuint Get() final { return 0; };
+        GLvoid Bind() final;
+        GLvoid UnBind() final;
+        GLuint Get() final;
 
     public:
-        CTranslate()
-            : m_x(0.0f)
-            , m_y(0.0f)
-            , m_z(0.0f)
-        {
-        }
-
-        /*CTranslate(const GLfloat& x = 0.0f, const GLfloat& y = 0.0f, const GLfloat& z = 0.0f)
-            : m_x(x)
-            , m_y(y)
-            , m_z(z)
-        {
-        }*/
+        CTranslate();
+        CTranslate(const GLfloat& x, const GLfloat& y, const GLfloat& z);
         ~CTranslate() override = default;
 
-        GLvoid Set(const GLfloat& x = 0.0f, const GLfloat& y = 0.0f, const GLfloat& z = 0.0f)
-        {
-            m_x = x;
-            m_y = y;
-            m_z = z;
-        }
+        GLvoid Set(const GLfloat& x = 0.0f, const GLfloat& y = 0.0f, const GLfloat& z = 0.0f);
     };
 }

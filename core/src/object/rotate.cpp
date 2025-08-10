@@ -74,6 +74,19 @@ namespace core
         transform = Update(transform);
     }
 
+    GLvoid CRotate::Bind()
+    {
+    }
+
+    GLvoid CRotate::UnBind()
+    {
+    }
+
+    GLuint CRotate::Get()
+    {
+        return 0;
+    }
+
     GLvoid CRotate::Set(const GLfloat& degrees, const GLfloat& x, const GLfloat& y, const GLfloat& z)
     {
         m_degrees = degrees;

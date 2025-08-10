@@ -30,9 +30,9 @@ namespace core
     GLint CShader::Type(const GLint& type)
     {
         switch(type) {
-            case core::ShaderVertex:
+            case core::CShader::Vertex:
                 return GL_VERTEX_SHADER;
-            case core::ShaderFragment:
+            case core::CShader::Fragment:
                 return GL_FRAGMENT_SHADER;
             default:
                 return 0;
@@ -51,7 +51,6 @@ namespace core
         }
     }
 
-    // GLint CShader::Create(const GLchar* shader, const GLint& size, const GLint& type)
     GLint CShader::Create()
     {
         GLint compiled = 0;
@@ -101,20 +100,6 @@ namespace core
 
         m_list_shaders.clear();
     }
-
-    /*GLint CShaderProgram::Add(const GLchar* shader, const GLint& size, const GLint& type)
-    {
-        GLint result = 0;
-        CShader* objShader = new CShader();
-
-        result = objShader->Create(shader, size, type);
-        if(result == 0)
-            m_list_shaders.push_back(objShader);
-        else
-            delete objShader;
-
-        return result;
-    }*/
 
     GLint CShaderProgram::Create()
     {
@@ -189,10 +174,63 @@ namespace core
             node->Init(transform);
     }
 
+    GLvoid CShaderProgram::draw(Node* node)
+    {
+        CShaderProgram::Use();
+
+        if(node != nullptr)
+            node->Draw(m_shader_program);
+    }
+
+    GLvoid CShaderProgram::draw(const GLuint* array, Node* node)
+    {
+        CShaderProgram::Use();
+
+        if(node != nullptr)
+            node->Draw(m_shader_program, array);
+    }
+
+    GLvoid CShaderProgram::draw(const GLuint& shader_program, const GLuint* array, Node* node)
+    {
+        throw std::runtime_error("error: wrong call: GLvoid CShaderProgram::draw(const GLuint& shader_program, const GLuint* array, Node* node)");
+
+        /*CShaderProgram::Use();
+
+        if(node != nullptr)
+            node->Draw(m_shader_program, array);*/
+    }
+
+    GLvoid CShaderProgram::draw(const GLuint& shader_program, Node* node)
+    {
+        throw std::runtime_error("error: wrong call: GLvoid CShaderProgram::draw(const GLuint& shader_program, Node* node)");
+
+        /*if(m_shader_program != shader_program)
+            throw std::runtime_error("error: conflict shader program");
+
+        CShaderProgram::Use();
+
+        if(node != nullptr)
+            node->Draw(shader_program);*/
+    }
+
+    GLvoid CShaderProgram::update(Node* node)
+    {
+        if(node != nullptr)
+            node->Update();
+    }
+
+    GLvoid CShaderProgram::update(glm::mat4& transform, Node* node)
+    {
+        if(node != nullptr)
+            node->Update(transform);
+    }
+
     GLuint CShaderProgram::Get()
     {
         return m_shader_program;
     }
+
+    // -------------------------------------------------------------------
 
     GLint CShaderProgram::GetLocation(const GLchar* name)
     {
@@ -203,17 +241,12 @@ namespace core
         return location;
     }
 
-    GLvoid CShaderProgram::SetTexture(const GLchar* name, const GLint& value)
-    {
-        glUniform1i(GetLocation(m_shader_program, name), value);
-    }
-
     GLvoid CShaderProgram::Update(const GLchar* name, const GLfloat* value)
     {
         glUniformMatrix4fv(GetLocation(m_shader_program, name), 1, GL_FALSE, value);
     }
 
-    // --------------------------------------------
+    // -------------------------------------------------------------------
 
     GLint CShaderProgram::GetLocation(const GLuint& shader_program, const GLchar* name)
     {
@@ -229,52 +262,10 @@ namespace core
         glUniformMatrix4fv(GetLocation(shader_program, name), 1, GL_FALSE, value);
     }
 
-    // --------------------
+    // -------------------------------------------------------------------
 
-    GLvoid CShaderProgram::draw(const GLuint* array, Node* node)
+    GLvoid CShaderProgram::SetTexture(const GLchar* name, const GLint& value)
     {
-        CShaderProgram::Use();
-
-        if(node != nullptr)
-            node->Draw(m_shader_program, array);
-    }
-
-    GLvoid CShaderProgram::draw(const GLuint& shader_program, const GLuint* array, Node* node)
-    {
-        CShaderProgram::Use();
-
-        if(node != nullptr)
-            node->Draw(m_shader_program, array);
-    }
-
-    GLvoid CShaderProgram::draw(const GLuint& shader_program, Node* node)
-    {
-        if(m_shader_program != shader_program)
-            throw std::runtime_error("error: conflict shader program");
-
-        CShaderProgram::Use();
-
-        if(node != nullptr)
-            node->Draw(shader_program);
-    }
-
-    GLvoid CShaderProgram::draw(Node* node)
-    {
-        CShaderProgram::Use();
-
-        if(node != nullptr)
-            node->Draw(m_shader_program);
-    }
-
-    GLvoid CShaderProgram::update(Node* node)
-    {
-        if(node != nullptr)
-            node->Update();
-    }
-
-    GLvoid CShaderProgram::update(glm::mat4& transform, Node* node)
-    {
-        if(node != nullptr)
-            node->Update(transform);
+        glUniform1i(GetLocation(m_shader_program, name), value);
     }
 }

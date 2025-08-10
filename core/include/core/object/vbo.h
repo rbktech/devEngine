@@ -21,6 +21,9 @@ namespace core
         GLvoid update(Node* node) final;
         GLvoid update(glm::mat4& transform, Node* node) final;
 
+        GLvoid Update();
+        GLvoid Update(const GLuint& offset);
+
     public:
         CVBO();
         CVBO(const GLvoid* data, const GLsizei& size);
@@ -29,18 +32,5 @@ namespace core
         GLvoid Bind() final;
         GLvoid UnBind() final;
         GLuint Get() final;
-
-        GLvoid Update();
-        GLvoid Update(const GLuint& offset);
-
-        GLvoid SetBuffer(const GLfloat* buffer, const GLsizei& size);
-
-        GLvoid EnableVertex(const GLint& nCoord, const GLsizei& stride, const GLint& beginByte);
-        GLvoid EnableColor(const GLint& nColor, const GLsizei& stride, const GLint& beginByte);
-        GLvoid EnableTexCoord(const GLint& nTexCoord, const GLsizei& stride, const GLint& beginByte);
-
-        GLvoid DisableVertex();
-        GLvoid DisableColor();
-        GLvoid DisableTexCoord();
     };
 }

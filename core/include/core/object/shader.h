@@ -7,28 +7,23 @@
 
 namespace core
 {
-    enum {
-        ShaderVertex,
-        ShaderFragment,
-    };
-
     class CShader : public CData
     {
     private:
         GLuint m_type;
         GLuint m_shader;
 
-        GLvoid init(Node* node) final {};
-        GLvoid init(const GLint& param, Node* node) final {};
-        GLvoid init(glm::mat4& transform, Node* node) final {};
+        GLvoid init(Node*) final {};
+        GLvoid init(const GLint&, Node*) final {};
+        GLvoid init(glm::mat4&, Node*) final {};
 
-        GLvoid draw(Node* node) final {};
-        GLvoid draw(const GLuint* array, Node* node) final {}
-        GLvoid draw(const GLuint& shader_program, Node* node) final {}
-        GLvoid draw(const GLuint& shader_program, const GLuint* array, Node* node) final {}
+        GLvoid draw(Node*) final {};
+        GLvoid draw(const GLuint*, Node*) final {};
+        GLvoid draw(const GLuint&, Node*) final {};
+        GLvoid draw(const GLuint&, const GLuint*, Node*) final {};
 
-        GLvoid update(Node* node) final {};
-        GLvoid update(glm::mat4& transform, Node* node) final {};
+        GLvoid update(Node*) final {};
+        GLvoid update(glm::mat4&, Node*) final {};
 
         GLvoid Bind() final {};
         GLvoid UnBind() final {};
@@ -37,11 +32,14 @@ namespace core
         CShader(const GLchar* shader, const GLint& size, const GLint& type);
         ~CShader() override;
 
+        enum {
+            Vertex,
+            Fragment,
+        };
+
         GLint Create();
 
         GLuint Get() final;
-
-        GLvoid Set() {};
 
         static const GLchar* GetType(const GLint& type);
 
@@ -60,8 +58,6 @@ namespace core
 
         GLvoid CLear();
 
-        GLint Add(const GLchar* shader, const GLint& size, const GLint& type);
-
         GLvoid init(Node* node) final;
         GLvoid init(const GLint& param, Node* node) final;
         GLvoid init(glm::mat4& transform, Node* node) final;
@@ -77,26 +73,26 @@ namespace core
         GLvoid Bind() final {};
         GLvoid UnBind() final {};
 
+        GLint Create();
+
     public:
         CShaderProgram();
         ~CShaderProgram() override;
 
-        GLint Create();
-
-        GLvoid Use();
+        GLuint Get() final;
 
         GLvoid Set(const GLchar* shader, const GLint& size, const GLint& type);
 
-        GLuint Get() final;
-
         GLint GetLocation(const GLchar* name);
-
-        GLvoid SetTexture(const GLchar* name, const GLint& value);
 
         GLvoid Update(const GLchar* name, const GLfloat* value);
 
         static GLint GetLocation(const GLuint& shader_program, const GLchar* name);
 
         static GLvoid Update(const GLuint& shader_program, const GLchar* name, const GLfloat* value);
+
+        GLvoid Use();
+
+        GLvoid SetTexture(const GLchar* name, const GLint& value);
     };
 }

@@ -23,7 +23,7 @@ namespace core
         if(node != nullptr)
             node->Init();
 
-        // CRBO::UnBind();
+        CRBO::UnBind();
     }
 
     GLvoid CRBO::init(const GLint& param, Node* node)
@@ -33,7 +33,7 @@ namespace core
         if(node != nullptr)
             node->Init(param);
 
-        // CRBO::UnBind();
+        CRBO::UnBind();
     }
 
     GLvoid CRBO::init(glm::mat4& transform, Node* node)
@@ -43,7 +43,7 @@ namespace core
         if(node != nullptr)
             node->Init(transform);
 
-        // CRBO::UnBind();
+        CRBO::UnBind();
     }
 
     GLvoid CRBO::draw(Node* node)

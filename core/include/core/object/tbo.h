@@ -7,8 +7,6 @@ namespace core
     class CTBO : public CData
     {
     private:
-        // GLuint m_vertex_array_object;
-        // GLuint m_vertex_buffer_objects; // Vertex Buffer Objects, VBO
         GLuint m_texture_buffer_object; // Texture Buffer Object
 
         GLvoid init(Node* node) final;
@@ -34,13 +32,5 @@ namespace core
         GLvoid Bind() final;
         GLvoid UnBind() final;
         GLuint Get() final;
-
-        GLvoid SetBuffer();
-
-        GLvoid DisableVertex();
-        GLvoid DisableTexCoord();
-
-        GLvoid EnableVertex();
-        GLvoid EnableTexCoord();
     };
 }

@@ -132,7 +132,7 @@ void CResource::ReadArray(std::basic_istream<char>& stream)
 
     stream.read(m_root, m_size);
 
-    for(int i = 0; i < m_size; i += sizeof(float)) {
+    for(unsigned i = 0; i < m_size; i += sizeof(float)) {
         number = reinterpret_cast<float*>(&m_root[i]);
         if(number != nullptr)
             m_data.emplace_back(*number);
@@ -164,7 +164,8 @@ int CResource::Load(const std::string& filepath, const uint8_t& debug)
                     ReadArray(file);
 
                 error = 0;
-            }
+            } else
+                throw std::runtime_error("error: file type is not support");
 
         } catch(const std::exception& e) {
             e.what();
@@ -187,7 +188,7 @@ int CResource::Save(const std::string& filepath)
 
         for(auto& p : m_data) {
             ch = reinterpret_cast<char*>(&p);
-            for(int i = 0; i < sizeof(float); i++)
+            for(unsigned i = 0; i < sizeof(float); i++)
                 file << ch[i];
         }
 

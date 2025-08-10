@@ -17,8 +17,6 @@ namespace core
         e(glDeleteVertexArrays(1, &m_vertex_array_object));
     }
 
-    // -------------------------------------------------------------------
-
     GLvoid CVAO::init(Node* node)
     {
         CVAO::Bind();
@@ -100,8 +98,6 @@ namespace core
         if(node != nullptr)
             node->Update(transform);
     }
-
-    // -------------------------------------------------------------------
 
     GLvoid CVAO::Bind()
     {

@@ -1,20 +1,21 @@
 #include "core/object/camera.h"
 
-#include <GL/glew.h>
-
-// #include <glm/ext/matrix_float4x4.hpp>
-// #include <glm/gtc/type_ptr.hpp>
-
-// #include "core/error.h"
-
-#include <glm/gtc/type_ptr.hpp>
 #include <glm/ext/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "core/object/shader.h"
 
 namespace core
 {
     CCamera::CCamera()
+        : m_view(glm::mat4(1.0f))
+        , mRadius(3.0f)
+        , mCameraEye(0.0f, 0.0f, mRadius)
+        , mCameraFront(0.0f, 0.0f, 1.0f)
+        , mCameraCenter(0.0f, 0.0f, 0.0f)
+        , mCameraUp(0.0f, 1.0f, 0.0f)
+        , mPitch(0.0f)
+        , mYaw(0.0f)
     {
     }
 
@@ -104,13 +105,24 @@ namespace core
     {
     }
 
-    GLvoid CCamera::Set(const TMove& move)
+    GLvoid CCamera::Set(const TMoveXZ& move)
     {
         glm::vec3 right = glm::cross(mCameraFront, mCameraUp);
 
-        mCameraCenter +=               //
+        mCameraCenter +=           //
             move.x * right +       // движение влево/вправо
             move.z * mCameraFront; // движение вперед/назад
+
+        Refresh();
+    }
+
+    GLvoid CCamera::Set(const TMoveXY& move)
+    {
+        glm::vec3 right = glm::cross(mCameraFront, mCameraUp);
+
+        mCameraCenter +=        //
+            move.x * right +    // движение влево/вправо
+            move.y * mCameraUp; // движение вверх/вниз
 
         Refresh();
     }
@@ -150,5 +162,10 @@ namespace core
 
     GLvoid CCamera::UnBind()
     {
+    }
+
+    glm::mat4 CCamera::GetMatrix()
+    {
+        return m_view;
     }
 }

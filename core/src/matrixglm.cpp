@@ -73,7 +73,8 @@ namespace core
 
     GLvoid print(const glm::vec2& v, const GLchar* tag)
     {
-        v.x; v.y;
+        v.x;
+        v.y;
 
         if(tag != nullptr)
             std::cout << tag << ": ";
@@ -91,7 +92,9 @@ namespace core
 
     GLvoid print(const glm::vec3& v, const GLchar* tag)
     {
-        v.x; v.y; v.z;
+        v.x;
+        v.y;
+        v.z;
 
         if(tag != nullptr)
             std::cout << tag << ": ";
@@ -109,7 +112,10 @@ namespace core
 
     GLvoid print(const glm::vec4& v, const GLchar* tag)
     {
-        v.x; v.y; v.z; v.w;
+        v.x;
+        v.y;
+        v.z;
+        v.w;
 
         if(tag != nullptr)
             std::cout << tag << ": ";

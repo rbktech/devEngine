@@ -8,6 +8,14 @@ namespace core
 {
     CTBO::CTBO()
         : CData(nullptr, 0)
+        , m_texture_buffer_object(0)
+    {
+        e(glGenBuffers(1, &m_texture_buffer_object));
+    }
+
+    CTBO::CTBO(const GLvoid* data, const GLsizei& size)
+        : CData(data, size)
+        , m_texture_buffer_object(0)
     {
         e(glGenBuffers(1, &m_texture_buffer_object));
     }
@@ -29,7 +37,7 @@ namespace core
         if(node != nullptr)
             node->Init();
 
-        // CTBO::UnBind();
+        CTBO::UnBind();
     }
 
     GLvoid CTBO::init(const GLint& param, Node* node)
@@ -44,7 +52,7 @@ namespace core
         if(node != nullptr)
             node->Init(param + 1);
 
-        // CTBO::UnBind();
+        CTBO::UnBind();
     }
 
     GLvoid CTBO::init(glm::mat4& transform, Node* node)
@@ -59,47 +67,31 @@ namespace core
         if(node != nullptr)
             node->Init(transform);
 
-        // CTBO::UnBind();
+        CTBO::UnBind();
     }
 
     GLvoid CTBO::draw(Node* node)
     {
-        // CTBO::Bind();
-
         if(node != nullptr)
             node->Draw();
-
-        // CTBO::UnBind();
     }
 
     GLvoid CTBO::draw(const GLuint* array, Node* node)
     {
-        // CTBO::Bind();
-
         if(node != nullptr)
             node->Draw(array);
-
-        // CTBO::UnBind();
     }
 
     GLvoid CTBO::draw(const GLuint& shader_program, Node* node)
     {
-        // CTBO::Bind();
-
         if(node != nullptr)
             node->Draw(shader_program);
-
-        // CTBO::UnBind();
     }
 
     GLvoid CTBO::draw(const GLuint& shader_program, const GLuint* array, Node* node)
     {
-        // CTBO::Bind();
-
         if(node != nullptr)
             node->Draw(shader_program, array);
-
-        // CTBO::UnBind();
     }
 
     GLvoid CTBO::update(Node* node)
@@ -116,6 +108,21 @@ namespace core
 
         if(node != nullptr)
             node->Update(transform);
+    }
+
+    GLvoid CTBO::Bind()
+    {
+        e(glBindBuffer(GL_ARRAY_BUFFER, m_texture_buffer_object));
+    }
+
+    GLvoid CTBO::UnBind()
+    {
+        e(glBindBuffer(GL_ARRAY_BUFFER, 0));
+    }
+
+    GLuint CTBO::Get()
+    {
+        return m_texture_buffer_object;
     }
 
     GLvoid CTBO::Update()
@@ -140,20 +147,5 @@ namespace core
 
             CTBO::UnBind();
         }
-    }
-
-    GLvoid CTBO::Bind()
-    {
-        e(glBindBuffer(GL_ARRAY_BUFFER, m_texture_buffer_object));
-    }
-
-    GLvoid CTBO::UnBind()
-    {
-        e(glBindBuffer(GL_ARRAY_BUFFER, 0));
-    }
-
-    GLuint CTBO::Get()
-    {
-        return m_texture_buffer_object;
     }
 }
