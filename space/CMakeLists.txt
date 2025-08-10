@@ -33,4 +33,8 @@ set(INSTALL_TARGET_FILES
         ${PROJECT_NAME}
 )
 
-include("${CMAKE_SOURCE_DIR}/config/install.cmake")
+get_filename_component(CURRENT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY )
+
+if(${CURRENT_SOURCE_DIR} MATCHES ${CMAKE_SOURCE_DIR})
+    include("${CMAKE_SOURCE_DIR}/config/install.cmake")
+endif()

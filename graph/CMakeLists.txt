@@ -12,7 +12,8 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 add_definitions(-DVERSION="${PROJECT_VERSION}")
 add_definitions(-DGLEW_STATIC)
 
-include_directories("include/graph")
+include_directories("include")
+include_directories("$ENV{GLM}/include")
 include_directories("${CMAKE_SOURCE_DIR}/core/include")
 
 add_library(${PROJECT_NAME})
@@ -35,4 +36,8 @@ set(INSTALL_TARGET_FILES
         ${PROJECT_NAME}
 )
 
-include("${CMAKE_SOURCE_DIR}/config/install.cmake")
+get_filename_component(CURRENT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY )
+
+if(${CURRENT_SOURCE_DIR} MATCHES ${CMAKE_SOURCE_DIR})
+    include("${CMAKE_SOURCE_DIR}/config/install.cmake")
+endif()

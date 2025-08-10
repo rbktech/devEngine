@@ -1,4 +1,4 @@
-#include "graph.h"
+#include "graph/graph.h"
 
 #include <GL/glu.h>
 
